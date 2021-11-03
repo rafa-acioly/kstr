@@ -65,8 +65,8 @@ class LibraryTest {
     }
 
     @Test fun `should masks a portion of a string with a repeated character`() {
-        val expected = "foo******"
-        val actual = "foo bar baz".mask(6, "*")
+        val expected = "foo********"
+        val actual = "foo bar baz".mask(3, "*")
 
         assertEquals(expected, actual)
     }
@@ -99,15 +99,15 @@ class LibraryTest {
         assertEquals(expected, actual)
     }
 
-    @Test fun `should Call the given callback and return a new string`() {
+    @Test fun `should call the given callback and return a new string`() {
         val expected = "BOO"
-        val actual = "foo".pipe { it.uppercase() }.pipe { it.replace("f", "b") }
+        val actual = "foo".pipe { it.uppercase() }.pipe { it.replace("F", "B") }
 
         assertEquals(expected, actual)
     }
 
     @Test fun `should prepend the given values to the string`() {
-        val expected = "foo bar baz"
+        val expected = "barbazfoo"
         val actual = "foo".prepend("bar", "baz")
 
         assertEquals(expected, actual)
@@ -141,17 +141,10 @@ class LibraryTest {
         assertEquals(expected, actual)
     }
 
-    @Test fun `should limit the number of words in a string`() {
-        val expected = "foo bar baz"
-        val actual = "foo bar baz baz".limit(3)
-
-        assertEquals(expected, actual)
-    }
-
     @Test fun `should get the number of words a string contains`() {
         val expected = 3
         val actual = "foo bar baz".wordCount()
-
+        
         assertEquals(expected, actual)
     }
 }

@@ -6,7 +6,7 @@ package kstr
  */
 fun String.after(value: String): String {
     val index = this.indexOf(value)
-    return if (index == -1) this else this.substring(index + value.length)
+    return if (index == -1) this else this.substring(index + value.length).trim()
 }
 
 /**
@@ -30,7 +30,7 @@ fun String.baseName(): String {
  */
 fun String.before(value: String): String {
     val index = this.indexOf(value)
-    return if (index == -1) this else this.substring(0, index)
+    return if (index == -1) this else this.substring(0, index).trim()
 }
 
 /**
@@ -47,14 +47,14 @@ fun String.beforeLast(value: String): String {
 fun String.between(start: String, end: String): String {
     val startIndex = this.indexOf(start)
     val endIndex = this.indexOf(end)
-    return if (startIndex == -1 || endIndex == -1) this else this.substring(startIndex + start.length, endIndex)
+    return if (startIndex == -1 || endIndex == -1) this else this.substring(startIndex + start.length, endIndex).trim()
 }
 
 /**
  * Cap a string with a single instance of a given value.
  */
 fun String.finish(value: String): String {
-    return if (this.startsWith(value)) this else value + this
+    return if (this.endsWith(value)) this else this + value
 }
 
 /**
@@ -89,14 +89,14 @@ fun String.padBoth(length: Int, pad: String = " "): String {
  * Pad the left side of the string with another.
  */
 fun String.padLeft(length: Int, pad: String = " "): String {
-    return if (this.length >= length) this else pad.repeat(length - this.length) + this
+    return pad.repeat(length) + this
 }
 
 /*
  * Pad the right side of the string with another.
  */
 fun String.padRight(length: Int, pad: String = " "): String {
-    return if (this.length >= length) this else this + pad.repeat(length - this.length)
+    return this + pad.repeat(length)
 }
 
 /*
@@ -132,16 +132,16 @@ fun String.replaceLast(value: String, replacement: String): String {
 /*
  * Execute the given callback if the string is empty.
  */
-fun String.whenEmpty(callback: () -> Unit): String {
-    if (this.isEmpty()) callback()
+fun String.whenEmpty(callback: () -> String): String {
+    if (this.isEmpty()) return callback()
     return this
 }
 
 /*
  * Execute the given callback if the string is not empty.
  */
-fun String.whenNotEmpty(callback: () -> Unit): String {
-    if (!this.isEmpty()) callback()
+fun String.whenNotEmpty(callback: (param: String) -> String): String {
+    if (this.isNotEmpty()) return callback(this)
     return this
 }
 
